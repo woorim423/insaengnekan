@@ -1,0 +1,7 @@
+# 개인과제 전용 (수업 루트 requirements에 더해 설치)
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12
+langchain-groq>=0.3.0
+openai>=1.0.0
+python-dotenv>=1.2.3

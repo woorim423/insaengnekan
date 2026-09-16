@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>인생네칸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Syne:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <h1 class="brand">인생네칸</h1>
+        <p class="subtitle">Speak it. Sort it. Do it.</p>
+        <p class="lede">
+          막 적거나 말하면 Do · Schedule · Delegate · Delete 인생 네 칸으로 나누고, 달력에 일정을 얹습니다.
+        </p>
+      </header>
+
+      <div id="view-matrix" class="view is-active">
+        <section class="panel input-panel">
+          <label for="raw-text">뇌 덤프</label>
+          <textarea
+            id="raw-text"
+            rows="7"
+            maxlength="2000"
+            placeholder="예: 내일까지 과제 제출해야 하고, 발표 자료는 목차도 없음. 친구 생일 카톡은 오늘 안에…"
+          ></textarea>
+          <div class="actions">
+            <button type="button" id="record-btn" class="btn ghost">녹음</button>
+            <button type="button" id="todo-btn" class="btn primary">TODO 만들기</button>
+          </div>
+          <p id="status" class="status" aria-live="polite"></p>
+        </section>
+
+        <section class="blocks-wrap" id="board" hidden>
+          <p class="blocks-hint">카드를 드래그해서 원하는 블록으로 옮길 수 있어요.</p>
+          <div class="block-stack">
+            <div class="block q-do drop-target" data-q="important_urgent">
+              <h2>Do</h2>
+              <p class="q-hint">지금 당장 해야하는 중요한 일</p>
+              <ul class="cards drop-zone"></ul>
+            </div>
+            <div class="block q-schedule drop-target" data-q="important_not_urgent">
+              <h2>Schedule</h2>
+              <p class="q-hint">장기 성공에 중요하지만 당장 할 필요는 없는 일</p>
+              <ul class="cards drop-zone"></ul>
+            </div>
+            <div class="block q-delegate drop-target" data-q="not_important_urgent">
+              <h2>Delegate</h2>
+              <p class="q-hint">빨리 해야하지만 크게 중요하지 않은 일</p>
+              <ul class="cards drop-zone"></ul>
+            </div>
+            <div class="block q-delete drop-target" data-q="not_important_not_urgent">
+              <div class="block-head-row">
+                <div>
+                  <h2>Delete</h2>
+                  <p class="q-hint">방해되거나 불필요한 일</p>
+                </div>
+                <button type="button" class="toggle-btn" id="delete-toggle" hidden>
+                  더보기
+                </button>
+              </div>
+              <ul class="cards drop-zone delete-cards" hidden></ul>
+            </div>
+            <div class="block q-done" data-section="done">
+              <div class="block-head-row">
+                <div>
+                  <h2>Done</h2>
+                  <p class="q-hint">Checked-off tasks</p>
+                </div>
+                <button type="button" class="toggle-btn" id="done-toggle" hidden>
+                  More
+                </button>
+              </div>
+              <ul class="cards done-cards" hidden></ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel reality-panel" id="reality-panel" hidden>
+          <p class="reality-badge">Reality Check</p>
+          <p id="reality-message" class="reality-message"></p>
+          <div class="reality-actions">
+            <button type="button" id="reality-apply" class="btn primary">권장안 적용</button>
+            <button type="button" id="reality-keep" class="btn ghost">그대로 두기</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-calendar" class="view">
+        <section class="panel calendar-panel">
+          <div class="cal-header">
+            <button type="button" id="cal-prev" class="btn icon" aria-label="이전 달">‹</button>
+            <h2 id="cal-title">Calendar</h2>
+            <button type="button" id="cal-next" class="btn icon" aria-label="다음 달">›</button>
+          </div>
+          <div class="cal-weekdays" aria-hidden="true">
+            <span>sun</span><span>mon</span><span>tue</span><span>wed</span>
+            <span>thu</span><span>fri</span><span>sat</span>
+          </div>
+          <div id="cal-grid" class="cal-grid"></div>
+          <p class="cal-help">
+            카드의 날짜를 바꾸면 여기에 매핑됩니다. 오늘/내일 같은 표현은 자동으로 잡습니다.
+          </p>
+        </section>
+
+        <section class="panel day-panel">
+          <div class="day-head">
+            <h3 id="day-title">Selected day</h3>
+            <span id="day-count" class="day-count">0</span>
+          </div>
+          <ul id="day-list" class="day-list"></ul>
+          <p id="day-empty" class="day-empty">이 날짜에 매핑된 할 일이 없습니다.</p>
+        </section>
+      </div>
+    </div>
+
+    <nav class="tabbar" aria-label="뷰 전환">
+      <button type="button" class="tab is-active" data-view="matrix">
+        <span class="tab-icon">▦</span>
+        Matrix
+      </button>
+      <button type="button" class="tab" data-view="calendar">
+        <span class="tab-icon">▣</span>
+        Calendar
+      </button>
+    </nav>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
